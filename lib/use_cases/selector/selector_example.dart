@@ -1,0 +1,1 @@
+/// Sadece tek bir parametreyi dinlemek icin

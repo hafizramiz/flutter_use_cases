@@ -1,13 +1,22 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_use_case/use_cases/bloc/ui/home_screen.dart';
+import 'package:flutter_use_case/use_cases/bloc/ui/login_screen.dart';
+import 'package:flutter_use_case/use_cases/bloc/ui/splash_screen.dart';
+import 'package:flutter_use_case/use_cases/bloc/view_model/LoginViewModel.dart';
 import 'package:flutter_use_case/use_cases/builder_example/builder_example.dart';
 import 'package:flutter_use_case/use_cases/cancel_token/cancel_token.dart';
 import 'package:flutter_use_case/use_cases/inherited_example/inherited_example.dart';
 import 'package:flutter_use_case/use_cases/widget-tree-render-tree-element-tree/example.dart';
 import 'package:flutter_use_case/use_cases/widget_life_cycle/didchangedep.dart';
 import 'package:flutter_use_case/use_cases/widget_life_cycle/initstateexample.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) =>  const MyApp(), // Wrap your app
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,26 +26,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.dark,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: DidChangeDepExample(),
+      home: SplashScreen(),
+
+       initialRoute: "/splash",
+      routes: {
+        "/splash": (context) => SplashScreen(),
+        "/login": (context) =>ChangeNotifierProvider(
+    create: (BuildContext context) => LoginViewModel(),
+    child: LoginScreen(),
+    ),
+        "/home": (context) => HomeScreen(),
+      },
     );
   }
 }

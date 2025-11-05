@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(DevicePreview(
-    enabled: true,
+    // enabled: true,
     builder: (context) =>  const MyApp(), // Wrap your app
   ));
 }
@@ -25,13 +25,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    /// Burda home vermezsem hata vermiyor.
     return MaterialApp(
       themeMode: ThemeMode.dark,
-      title: 'Flutter Demo',
+      title: 'Flutter Use Cases',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SplashScreen(),
+      // home: SplashScreen(),
 
        initialRoute: "/splash",
       routes: {

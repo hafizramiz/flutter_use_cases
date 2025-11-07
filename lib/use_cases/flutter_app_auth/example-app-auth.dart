@@ -200,6 +200,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  /// Logout request -idToken ile istek atilir.
   Future<void> _endSession(
       {ExternalUserAgent externalUserAgent =
           ExternalUserAgent.asWebAuthenticationSession}) async {
@@ -351,7 +352,7 @@ class _MyAppState extends State<MyApp> {
 
       /*
         This code block demonstrates passing in values for the prompt
-        parameter. In this case it prompts the user login even if they have
+        parameter. In this case it prompts the user login_request_model even if they have
         already signed in. the list of supported values depends on the
         identity provider
 
@@ -361,7 +362,7 @@ class _MyAppState extends State<MyApp> {
           AuthorizationTokenRequest(_clientId, _redirectUrl,
               serviceConfiguration: _serviceConfiguration,
               scopes: _scopes,
-              promptValues: ['login']),
+              promptValues: ['login_request_model']),
         );
         ```
       */

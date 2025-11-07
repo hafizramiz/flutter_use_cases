@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
        initialRoute: "/splash",
       routes: {
         "/splash": (context) => SplashScreen(),
-        "/login": (context) =>ChangeNotifierProvider(
+        "/login_request_model": (context) =>ChangeNotifierProvider(
     create: (BuildContext context) => LoginViewModel(),
     child: LoginScreen(),
     ),

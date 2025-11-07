@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// BLoc Bussiness Logic Component
 /// Sonradan basveren processleri handle etmek icin burdaki yontemler
 /// farklidir.
-/// Sonradan bas veren surecten kasit login dugmesina basildi ama sonus
+/// Sonradan bas veren surecten kasit login_request_model dugmesina basildi ama sonus
 /// state belirlenmedi daha. belirlendigi anda UI guncellenecek ve Navigation yapilacak
 /// BlocComsumer var mesela
 /// Listener ve

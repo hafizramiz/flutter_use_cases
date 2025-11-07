@@ -8,10 +8,9 @@ class LoginRequestModel {
   /// Hangi sayfadan istek atildi.
   final String requestTag;
   final int methodId =
-      1; // Genellikle login için sabit bir MethodId kullanılır, Splash icin 0 kullanilir.
-  final String? token;
+      10; // Genellikle login_request_model için sabit bir MethodId kullanılır, Splash icin 0 kullanilir.
 
-  /// Bunun icinde login credential ve diger yetkilendirme ayarlari olacak
+  /// Bunun icinde login_request_model credential ve diger yetkilendirme ayarlari olacak
   final Map<String, dynamic> data;
   static const String _typeKey = '__type';
 
@@ -19,7 +18,7 @@ class LoginRequestModel {
     // InitRequestModel'den alınan zorunlu alanlar
     required this.type,
     required this.requestTag,
-    this.token,
+
 
     // Login Credential ve Ek Parametreler
     required String username,
@@ -45,7 +44,6 @@ class LoginRequestModel {
       _typeKey: type,
       'request Tag': requestTag,
       'Method id': methodId,
-      if (token != null) 'token': token,
       'data': data, // Login'de data her zaman zorunludur
     };
   }

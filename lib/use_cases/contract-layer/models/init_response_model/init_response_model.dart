@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_use_case/use_cases/securit-example/page_direction_codes.dart';
+import 'package:flutter_use_case/use_cases/contract-layer/page_direction_codes/page_direction_codes.dart';
 
 /// Init response Model https://docs.google.com/document/d/1DyYZGYsIzhGpybsuvgv_fs_EWtqW_3IsSq1dIov40xQ/edit?hl=tr&tab=t.0
 
@@ -18,7 +18,7 @@ class InitResponseModel {
   /// Bu yanıtın hangi isteğe ait olduğunu belirten kod.
   final int methodId;
 
-  /// Yönlendirme kodu (örn: login, home, password reset).
+  /// Yönlendirme kodu (örn: login_request_model, home, password reset).
   final int pageDirectionCode;
 
   /// Oturum kimliği.
@@ -134,7 +134,7 @@ InitResponseModel(
 ///
 ///   // Kod tabanlı yönlendirme:
 ///   switch (response.pageDirectionCode) {
-///     case PageDirectionCodes.login:
+///     case PageDirectionCodes.login_request_model:
 ///       print('🚨 Kullanıcı Giriş Sayfasına yönlendiriliyor.');
 ///       break;
 ///     case PageDirectionCodes.home:

@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.pushReplacementNamed(context, '/home');
     } else {
       // Giriş (Login) sayfasına yönlendir
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/login_request_model');
     }
   }
 

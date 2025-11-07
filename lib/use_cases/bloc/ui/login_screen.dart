@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Giriş butonuna basıldığında tetiklenecek fonksiyon
   void _performLogin() async {
-    // ViewModel'in login fonksiyonunu çağır
+    // ViewModel'in login_request_model fonksiyonunu çağır
     await context
         .read<LoginViewModel>()
         .login(_usernameController.text, _passwordController.text);

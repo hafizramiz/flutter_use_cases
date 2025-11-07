@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
   /// Login ve logout islemlerinde boolen degerler dondurur
   // Login using the given configuration.
   Future<void> login() async {
-    /// Once user login olmus mu kontrol et. Login degilse login istegi gonder.
+    /// Once user login_request_model olmus mu kontrol et. Login degilse login_request_model istegi gonder.
     // Check if user has successfully logged in.
     /// LOGIN OLAN KULLANICI IDTOKEN DONECEK. ID TOKEN ILE LOGOUT YAPILABILECEK
     /// ID TOKEN ILE PASSWORD RESET YAPILACAK. ID TOKEN ILE GUNDE 5 DEFADAN FAZLA ISTEK ATILMASI
@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
 }
 
 
-// /// Burda stream'i dinleyip login ve logout durumlarini gorebilirsin
+// /// Burda stream'i dinleyip login_request_model ve logout durumlarini gorebilirsin
 // keycloakWrapper.authenticationStream.listen((isLoggedIn) {
 // debugPrint('User is logged in: $isLoggedIn');
 // });

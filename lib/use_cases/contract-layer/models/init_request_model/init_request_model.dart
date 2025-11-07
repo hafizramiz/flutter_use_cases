@@ -3,7 +3,8 @@
 /// Bu model, tüm API çağrılarının gövdesini (body) standartlaştırır.
 import 'dart:convert';
 
-import 'config.dart';
+import '../../../config/config.dart';
+import '../../methodids/method_ids.dart';
 
 /// Burda idToken'da olacak. Bu token ile ikinci istegin gelmemesi saglanacak
 /// Yani iki tane arka arkaya sms istegi atamayacak.
@@ -52,12 +53,6 @@ class InitRequestModel {
   }
 }
 
-// --- KULLANIM ÖRNEĞİ ---
-abstract class RequestCodes {
-  const RequestCodes._();
-
-  static const int splashInit = 0; // Request ID: 0 (Splash'teki ilk istek)
-}
 
 /// Bunlarin bazilari device acilirken elde edilecek.
 void main() {
@@ -86,7 +81,7 @@ void main() {
   final initRequest = InitRequestModel(
     type: 'TRequest',
     requestTag: 'SplashView',
-    methodId: RequestCodes.splashInit,
+    methodId: MethodIds.splashInit,
     // 0 numaralı request
     sessionId: null,
     // İlk istek olduğu için Session ID olmayabilir.

@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     // Genellikle burada oturum kapatma (logout) mantığı uygulanır
                     // ve kullanıcı /login sayfasına geri yönlendirilir.
-                    Navigator.pushReplacementNamed(context, '/login');
+                    Navigator.pushReplacementNamed(context, '/login_request_model');
                   },
                   icon: const Icon(Icons.logout, color: Color(0xFF4A00E0)),
                   label: const Text(

@@ -65,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green,
       // Arka plan için gradient (geçişli) renk uygulaması
       body: Container(
         decoration: const BoxDecoration(

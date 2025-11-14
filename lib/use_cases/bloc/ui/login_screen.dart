@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Projenizdeki yolları güncelleyin
 import 'package:flutter_use_case/use_cases/bloc/bloc_state.dart'; 
-import 'package:flutter_use_case/use_cases/bloc/view_model/LoginViewModel.dart'; 
+import 'package:flutter_use_case/use_cases/bloc/view_model/LoginViewModel.dart';
+
+import '../../inherited_example/app_theme/app-theme-scope.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -59,20 +61,21 @@ class _LoginScreenState extends State<LoginScreen> {
     final error = isError ? (state as LoginFailure).errorMessage : null;
 
     return Scaffold(
+      backgroundColor: AppThemeScope.of(context).theme.colors.primary,
       // Scaffold'a SafeArea ekleyerek içeriği güvenli alanda tutuyoruz.
       body: SafeArea(
         // Arka plan gradient'i
         child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF8E2DE2), // Koyu Mor
-                Color(0xFF4A00E0), // Parlak Mavi/Mor
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+          // decoration: const BoxDecoration(
+          //   gradient: LinearGradient(
+          //     colors: [
+          //       Color(0xFF8E2DE2), // Koyu Mor
+          //       Color(0xFF4A00E0), // Parlak Mavi/Mor
+          //     ],
+          //     begin: Alignment.topLeft,
+          //     end: Alignment.bottomRight,
+          //   ),
+          // ),
           child: Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(32.0),

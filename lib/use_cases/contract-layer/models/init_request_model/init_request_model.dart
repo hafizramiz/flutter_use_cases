@@ -74,7 +74,6 @@ void main() {
     connectionType: 'Wifi',
     screenSize: '1080x1920',
     notificationPermission: true,
-
   );
 
   // 2. Config objesi JSON'a dönüştürülür ve InitRequestModel'in 'data' alanına eklenir.

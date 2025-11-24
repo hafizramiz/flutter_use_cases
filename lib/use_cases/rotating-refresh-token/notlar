@@ -1,0 +1,65 @@
+Bu izlediğiniz yöntem, **Dönen Refresh Token'lar (Rotating Refresh Tokens)** olarak bilinir ve **güvenlik açısından çok güçlü bir yaklaşımdır**, ancak yönetim ve oturum takibi açısından bazı ek zorluklar getirir.
+
+-----
+
+## 🔁 Dönen Refresh Token'lar (Rotating Refresh Tokens)
+
+Bu yöntemde, her başarılı Access Token yenileme işleminde (yani Refresh Token kullanıldığında), sadece yeni bir Access Token değil, aynı zamanda **yepyeni bir Refresh Token** da elde edilir.
+
+| Token Türü | Ne zaman değişir? | Normal Durum | Dönen Token (Sizin Durumunuz) |
+| :--- | :--- | :--- | :--- |
+| **Access Token** | Her zaman | Süresi dolduğunda yenilenir. | Süresi dolduğunda yenilenir. |
+| **Refresh Token** | Nadiren | Süresi dolana kadar **sabit kalır**. | **Her kullanılışta** (Access Token yenilenirken) yeni bir token ile değiştirilir. |
+
+### 1\. 🛡️ Güvenlik Avantajı (Best Practice)
+
+Bu, güvenlik açısından **mükemmel** bir uygulamadır ve genellikle **OAuth 2.0 en iyi uygulamaları** arasında tavsiye edilir.
+
+  * **Tek Kullanımlık Refresh Token:** Her Refresh Token, yalnızca bir kez Access Token almak için kullanılabilir.
+  * **Çalınan Tokenin İptali:** Eğer bir saldırgan Refresh Token'ı ele geçirirse ve onu kullanarak bir Access Token almaya çalışırsa:
+    1.  API, Refresh Token'ı kullanıldığı için hemen **iptal eder** ve yeni bir çift (Access + Refresh) yayınlar.
+    2.  Saldırgan aynı Refresh Token'ı **ikinci kez** kullanmaya çalıştığında, sunucu bunun **iptal edilmiş** bir token olduğunu anlar ve API, bunu bir **güvenlik ihlali** olarak kabul eder.
+    3.  Bu durumda API, genellikle **tüm ilişkili oturumları** (çalınan oturum dahil olmak üzere) iptal eder ve saldırganın daha fazla zarar vermesini engeller.
+
+### 2\. ⚠️ Yönetim Zorluğu (Kompleksite)
+
+Bu yöntem, sunucu tarafında ek bir mantık gerektirir:
+
+  * **Eşzamanlı Kullanım Kontrolü:** Sizin Interceptor mantığınızda, eş zamanlı isteklerin yalnızca **tek bir** yenileme işlemi başlatmasına izin veren bir kilit mekanizması kullanmanız **hayati önem** taşır. Aksi takdirde, iki eşzamanlı istek aynı anda aynı Refresh Token'ı kullanmaya çalışırsa, sunucunun bunlardan birini sahte (replay attack) olarak algılayıp tüm oturumu iptal etme riski vardır.
+  * **Depolama Güncellemesi:** Her başarılı yenileme isteğinden sonra, hem Access Token'ın hem de **yeni Refresh Token'ın** anında `SessionService`'e kaydedilmesi gerekir. Bu, Interceptor içindeki `_refreshToken` metotunun `_sessionManager`'ı yeni Refresh Token ile güncellemesini gerektirir.
+
+## 🔑 Mevcut Kodunuzda Yapılması Gereken Değişiklik
+
+Mevcut kodunuz bu yaklaşımı desteklemek için **`_refreshToken`** metodunda bir eklemeye ihtiyaç duyar.
+
+Sizin `_refreshToken` metodunuzun bu kısmına dikkat edelim:
+
+```dart
+// Mevcut kodunuzdaki _refreshToken içinden alınan parça
+// ...
+ApiResponse<MapDynamic> apiResponse = ApiResponse.fromResponse(response);
+if (apiResponse.success) {
+    final tokenResponse = RefreshTokenResponse.fromJson(apiResponse.data);
+    _sessionManager.refreshAccessToken(tokenResponse.accessToken); // Sadece Access Token'ı güncelliyor
+    return true;
+}
+// ...
+```
+
+Eğer sunucu yeni bir `refreshToken` döndürüyorsa, `RefreshTokenResponse` modelinizin ve `_sessionManager` metodunuzun bu yeni Refresh Token'ı da yakalayıp **kaydetmesi** gerekir:
+
+```dart
+// Örnek: Yeni Refresh Token'ı da kaydetme
+if (apiResponse.success) {
+    final tokenResponse = RefreshTokenResponse.fromJson(apiResponse.data);
+
+    // Yeni Refresh Token'ı da kaydetmek için SessionService metodunu güncellemelisiniz.
+    _sessionManager.refreshTokens(
+        tokenResponse.accessToken,
+        tokenResponse.refreshToken // <-- Yeni eklenen kısım
+    );
+    return true;
+}
+```
+
+**Sonuç:** Dönen Refresh Token'lar, doğru kilit mekanizmasıyla (sizin Interceptor'ınızdaki gibi) eşleştirildiğinde, oturum güvenliğinizi en üst düzeye çıkarır. Bu, çok **iyi bir yöntemdir**.
